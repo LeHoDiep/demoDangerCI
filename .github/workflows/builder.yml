@@ -38,6 +38,7 @@ jobs:
 
       - name: Update typeLibModule
         run: |
+          git submodule update --init typeLib
           git submodule update --remote typeLib
           git config --global user.email "lehodiep.1999@gmail.com"
           git config --global user.name "lehodiep.1999@gmail.com"
