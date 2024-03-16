@@ -1,3 +1,6 @@
 [submodule "typeLibra"]
 	path = typeLibra
 	url = https://github.com/LeHoDiep/typeLib.git
+[submodule "typeLib"]
+	path = typeLib
+	url = https://github.com/LeHoDiep/typeLib.git

@@ -36,12 +36,13 @@ jobs:
       - name: Run  protobuf
         run: npm run protobuf
 
-      - name: Update typeLibraModule
+      - name: Update typeLibModule
         run: |
+          git submodule update --remote typeLib
           git config --global user.email "lehodiep.1999@gmail.com"
           git config --global user.name "lehodiep.1999@gmail.com"
-          git submodule update --remote typeLibra
-          git add typeLibra
+
+          git add typeLib
           git commit -m "Update type - $(date '+%Y-%m-%d %H:%M:%S') - Commit: $GITHUB_SHA - Run ID: $GITHUB_RUN_ID"
           git push origin main
 
