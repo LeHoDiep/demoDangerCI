@@ -1,0 +1,3 @@
+[submodule "typeLibra"]
+	path = typeLibra
+	url = https://github.com/LeHoDiep/typeLib.git

@@ -1,0 +1,78 @@
+syntax = "proto3";
+message RegisterReqBody {
+  string name = 1;
+  string email = 2;
+  string password = 3;
+  string confirm_password = 4;
+  string date_of_birth = 5;
+}
+message LogoutReqBody {
+  string refresh_token = 1;
+}
+message TokenPayload {
+  string user_id = 1;
+  TokenType token_type = 2;
+  UserVerifyStatus verify = 3;
+  int32 exp = 4;
+  int32 iat = 5;
+}
+message LoginReqBody {
+  string email = 1;
+  string password = 2;
+}
+message VerifyEmailReqBody {
+  string email_verify_token = 1;
+}
+message ForgotPasswordReqBody {
+  string email = 1;
+}
+message VerifyForgotPasswordReqBody {
+  string forgot_password_token = 1;
+}
+message ResetPasswordReqBody {
+  string forgot_password_token = 1;
+  string password = 2;
+  string confirm_password = 3;
+}
+message UpdateMeReqBody {
+  string name = 1;
+  string date_of_birth = 2;
+  string bio = 3;
+  string location = 4;
+  string website = 5;
+  string username = 6;
+  string avatar = 7;
+  string cover_photo = 8;
+}
+message GetProfileReqParams {
+  string username = 1;
+}
+message FollowReqBody {
+  string followed_user_id = 1;
+}
+message UnfollowReqParams {
+  string user_id = 1;
+}
+message ChangePasswordReqBody {
+  string old_password = 1;
+  string password = 2;
+  string confirm_password = 3;
+}
+message RefreshTokenReqBody {
+  string refresh_token = 1;
+}
+message UserVerifyStatus {
+  int32 Unverified = 1;
+  int32 Verified = 2;
+  int32 Banned = 3;
+}
+message TokenType {
+  int32 AccessToken = 1;
+  int32 RefreshToken = 2;
+  int32 ForgotPasswordToken = 3;
+  int32 EmailVerificationToken = 4;
+}
+message MediaType {
+  int32 Image = 1;
+  int32 Video = 2;
+}

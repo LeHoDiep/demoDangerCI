@@ -12,7 +12,7 @@
     "prettier": "prettier --check .",
     "prettier:fix": "prettier --write .",
     "danger": "danger ci",
-    "protobuf": "pbjs -t static-module -w es6 -o reqResTypeRelease.js reqResType.proto && pbts -o reqResTypeRelease.d.ts reqResTypeRelease.js"
+    "protobuf": "pbjs -t static-module -w es6 -o ./typeLib/reqResTypeRelease.js reqResType.proto && pbts -o ./typeLib/reqResTypeRelease.d.ts ./typeLib/reqResTypeRelease.js"
   },
   "keywords": [],
   "author": "",
