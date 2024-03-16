@@ -9,12 +9,14 @@ import { config } from 'dotenv'
 import { UPLOAD_IMAGE_DIR, UPLOAD_VIDEO_DIR } from './constants/dir'
 import staticRouter from './routes/static.routes'
 import { MongoClient } from 'mongodb'
+import { renderProtoFile } from './utils/proto'
 config()
 
 const app = express()
 const router = express.Router()
 const port = process.env.PORT || 4000
 initFolder()
+renderProtoFile(['src/models/requests/User.requests.ts', 'src/constants/enums.ts'])
 app.use(express.json())
 
 databaseService.connect().then(() => {
@@ -29,7 +31,6 @@ app.use('/users', usersRouter)
 app.use('/medias', mediasRouter)
 // app.use('/static/video', express.static(UPLOAD_VIDEO_DIR))
 app.use('/static', staticRouter)
-
 app.use(defaultErrorHandler)
 app.listen(port, () => {
   console.log(`Project twitter này đang chạy trên post ${port}`)
