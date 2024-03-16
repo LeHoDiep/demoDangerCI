@@ -12,7 +12,7 @@
     "prettier": "prettier --check .",
     "prettier:fix": "prettier --write .",
     "danger": "danger ci",
-    "protobuf": "pbjs -t static-module -w es6 -o ./typeLib/reqResTypeRelease.js reqResType.proto && pbts -o ./typeLib/reqResTypeRelease.d.ts ./typeLib/reqResTypeRelease.js"
+    "protobuf": "pbjs -t static-module -w es6 -o ./typeLibra/reqResTypeRelease.js reqResType.proto && pbts -o ./typeLibra/reqResTypeRelease.d.ts ./typeLibra/reqResTypeRelease.js"
   },
   "keywords": [],
   "author": "",
@@ -27,6 +27,7 @@
     "@types/node": "^20.8.4",
     "@typescript-eslint/eslint-plugin": "^6.7.5",
     "@typescript-eslint/parser": "^6.7.5",
+    "chokidar": "^3.6.0",
     "danger": "^11.3.1",
     "eslint": "^8.51.0",
     "eslint-config-prettier": "^9.0.0",
@@ -36,6 +37,7 @@
     "protobufjs": "^7.2.6",
     "protobufjs-cli": "^1.1.2",
     "rimraf": "^5.0.5",
+    "simple-git": "^3.22.0",
     "ts-morph": "^22.0.0",
     "ts-node": "^10.9.1",
     "tsc-alias": "^1.8.8",

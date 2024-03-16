@@ -61,6 +61,9 @@ message ChangePasswordReqBody {
 message RefreshTokenReqBody {
   string refresh_token = 1;
 }
+message TestReqBody {
+  string test_string = 1;
+}
 message UserVerifyStatus {
   int32 Unverified = 1;
   int32 Verified = 2;

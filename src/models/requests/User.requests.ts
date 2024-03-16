@@ -70,3 +70,7 @@ export interface ChangePasswordReqBody {
 export interface RefreshTokenReqBody {
   refresh_token: string
 }
+
+export interface TestReqBody {
+  test_string: string
+}
