@@ -61,7 +61,7 @@ message ChangePasswordReqBody {
 message RefreshTokenReqBody {
   string refresh_token = 1;
 }
-message TestReqBody444 {
+message TestReqBody333 {
   string test_string = 1;
 }
 message UserVerifyStatus {
