@@ -144,7 +144,9 @@ class ProtobufjsRender {
     if (current === this.protoContent) {
       console.log(`File ${this.fileProtoName} không có thay đổi gì`)
     } else {
-      fs.writeFileSync(this.fileProtoName, this.protoContent)
+      await (async () => {
+        fs.writeFileSync(this.fileProtoName, this.protoContent)
+      })()
       const [fileTsPre, filejsPre] = await Promise.all([
         readFileGetContent('./typeLib/reqResTypeRelease.js'),
         readFileGetContent('./typeLib/reqResTypeRelease.d.ts')
