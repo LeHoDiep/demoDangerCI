@@ -9,16 +9,13 @@ import { config } from 'dotenv'
 import { UPLOAD_IMAGE_DIR, UPLOAD_VIDEO_DIR } from './constants/dir'
 import staticRouter from './routes/static.routes'
 import { MongoClient } from 'mongodb'
-import { renderProtoFile } from './utils/proto'
-import { trackingAutoPush } from './utils/trackingAutoPush'
 config()
 
 const app = express()
 const router = express.Router()
 const port = process.env.PORT || 4000
 initFolder()
-renderProtoFile(['src/models/requests/User.requests.ts', 'src/constants/enums.ts'])
-// trackingAutoPush({ directoryToWatch: './typeLibra', childRepoPath: './typeLibra' })
+
 app.use(express.json())
 
 databaseService.connect().then(() => {

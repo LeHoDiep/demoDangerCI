@@ -64,7 +64,10 @@ message RefreshTokenReqBody {
 message TestReqBody111 {
   string test_string = 1;
 }
-message TestReqBody000 {
+message TestReqBody00 {
+  string test_string = 1;
+}
+message TestReqBody11 {
   string test_string = 1;
 }
 message UserVerifyStatus {
