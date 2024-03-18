@@ -143,27 +143,27 @@ class ProtobufjsRender {
       this.protoContent += this.createMessageDefinition(bodyDefinitionType)
     })
     if (current === this.protoContent) {
-      console.log(`File ${this.fileProtoName} không có thay đổi gì`)
+      console.log(`File ${this.fileProtoName} change nothing`)
     } else {
       await (async () => {
         fs.writeFileSync(this.fileProtoName, this.protoContent)
       })()
       try {
-        const fileTsPre = await readFileGetContent('../typeLib/reqResTypeRelease.d.ts')
+        const fileTsPre = await readFileGetContent('./typeLib/reqResTypeRelease.d.ts')
 
         await renderFileDType()
-        const fileTsAfter = await readFileGetContent('../typeLib/reqResTypeRelease.d.ts')
+        const fileTsAfter = await readFileGetContent('./typeLib/reqResTypeRelease.d.ts')
         if (fileTsPre !== fileTsAfter) {
           const git = simpleGit('./typeLib')
           renderFileDType()
           git
             .add('.')
             .commit(`ChangeType: ${new Date().toISOString()}`)
-            .push(['origin', 'main'], () => console.log(`Code đã được push lên remote repo.`))
+            .push(['origin', 'main'], () => console.log(`pushed to remote repo`))
             .catch((err) => console.log('autopush: ' + err))
         }
       } catch (err) {
-        console.log('lỗi lúc lấy content: ', err)
+        console.log('error get content: ', err)
       }
     }
   }
