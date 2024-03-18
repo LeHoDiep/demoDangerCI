@@ -2,6 +2,7 @@ import fs from 'fs'
 import { Project } from 'ts-morph'
 import { exec } from 'child_process'
 import simpleGit from 'simple-git'
+import { wrapAsync } from './handlers'
 
 // define type
 type BodyDefinitionType = {
@@ -147,23 +148,27 @@ class ProtobufjsRender {
       await (async () => {
         fs.writeFileSync(this.fileProtoName, this.protoContent)
       })()
-      const [fileTsPre, filejsPre] = await Promise.all([
-        readFileGetContent('./typeLib/reqResTypeRelease.js'),
-        readFileGetContent('./typeLib/reqResTypeRelease.d.ts')
-      ])
-      await renderFileDType()
-      const [fileTsAfter, filejsAfter] = await Promise.all([
-        readFileGetContent('./typeLib/reqResTypeRelease.js'),
-        readFileGetContent('./typeLib/reqResTypeRelease.d.ts')
-      ])
-      if (fileTsPre !== fileTsAfter || filejsPre !== filejsAfter) {
-        const git = simpleGit('./typeLib')
-        renderFileDType()
-        git
-          .add('.')
-          .commit(`ChangeType: ${new Date().toISOString()}`)
-          .push(['origin', 'main'], () => console.log(`Code đã được push lên remote repo.`))
-          .catch((err) => console.log('autopush: ' + err))
+      try {
+        const [fileTsPre, filejsPre] = await Promise.all([
+          readFileGetContent('./typeLib/reqResTypeRelease.js'),
+          readFileGetContent('./typeLib/reqResTypeRelease.d.ts')
+        ])
+        await renderFileDType()
+        const [fileTsAfter, filejsAfter] = await Promise.all([
+          readFileGetContent('./typeLib/reqResTypeRelease.js'),
+          readFileGetContent('./typeLib/reqResTypeRelease.d.ts')
+        ])
+        if (fileTsPre !== fileTsAfter || filejsPre !== filejsAfter) {
+          const git = simpleGit('./typeLib')
+          renderFileDType()
+          git
+            .add('.')
+            .commit(`ChangeType: ${new Date().toISOString()}`)
+            .push(['origin', 'main'], () => console.log(`Code đã được push lên remote repo.`))
+            .catch((err) => console.log('autopush: ' + err))
+        }
+      } catch (err) {
+        console.log('lỗi lúc lấy content: ', err)
       }
     }
   }
