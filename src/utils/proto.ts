@@ -149,10 +149,10 @@ class ProtobufjsRender {
         fs.writeFileSync(this.fileProtoName, this.protoContent)
       })()
       try {
-        const fileTsPre = await readFileGetContent('./typeLib/reqResTypeRelease.d.ts')
+        const fileTsPre = await readFileGetContent('../typeLib/reqResTypeRelease.d.ts')
 
         await renderFileDType()
-        const fileTsAfter = await readFileGetContent('./typeLib/reqResTypeRelease.d.ts')
+        const fileTsAfter = await readFileGetContent('../typeLib/reqResTypeRelease.d.ts')
         if (fileTsPre !== fileTsAfter) {
           const git = simpleGit('./typeLib')
           renderFileDType()
