@@ -53,6 +53,7 @@ jobs:
           git checkout main  # Chuyển sang nhánh main của submodule (hoặc nhánh mong muốn)
           git stash pop
           # git pull origin main  # Pull các thay đổi mới nhất từ remote vào submodule
+          git mergetool --auto
           git add .  # Thêm submodule vào index
           git commit -m "Update submodule"
           git push origin main  # Push các thay đổi vào nhánh main của submodule
