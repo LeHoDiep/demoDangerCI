@@ -49,10 +49,10 @@ jobs:
           cd typeLib  # Di chuyển vào thư mục của submodule
           git config --global user.email "lehodiep.1999@gmail.com"
           git config --global user.name "lehodiep.1999@gmail.com"
-          git stash push
-          git checkout main  # Chuyển sang nhánh main của submodule (hoặc nhánh mong muốn)
-          git stash pop
-          git merge --abort  # Hủy bỏ quá trình merge và giữ lại phiên bản trước đó
+
+          # git checkout main  # Chuyển sang nhánh main của submodule (hoặc nhánh mong muốn)
+
+
           git add .  # Thêm submodule vào index
           git commit -m "Update submodule"
           git push origin main  # Push các thay đổi vào nhánh main của submodule
