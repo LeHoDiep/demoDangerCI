@@ -1,8 +1,6 @@
 import fs from 'fs'
 import { Project } from 'ts-morph'
 import { exec } from 'child_process'
-import simpleGit from 'simple-git'
-import { wrapAsync } from './handlers'
 
 // define type
 type BodyDefinitionType = {
@@ -148,22 +146,7 @@ class ProtobufjsRender {
       await (async () => {
         fs.writeFileSync(this.fileProtoName, this.protoContent)
       })()
-
-      const fileTsPre = await readFileGetContent('./typeLib/reqResTypeRelease.d.ts')
-
       await renderFileDType()
-      const fileTsAfter = await readFileGetContent('./typeLib/reqResTypeRelease.d.ts')
-      if (fileTsPre !== fileTsAfter) {
-        // const git = simpleGit('./typeLib')
-        await renderFileDType()
-        // try {
-        //   await git.add('.')
-        //   await git.commit(`ChangeType: ${new Date().toISOString()}`)
-        //   await git.push(['origin', 'main'])
-        // } catch (err) {
-        //   console.error('Error during git operations:', err)
-        // }
-      }
     }
   }
 
