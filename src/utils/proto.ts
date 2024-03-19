@@ -159,7 +159,7 @@ class ProtobufjsRender {
           await git
             .add('.')
             .commit(`ChangeType: ${new Date().toISOString()}`)
-            .push(['origin', 'main'], () => console.log(`pushed to remote repo`))
+            .push(['origin', 'main'])
             .catch((err) => console.log('autopush: ' + err))
         }
       } catch (err) {
