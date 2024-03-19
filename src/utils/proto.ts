@@ -156,11 +156,7 @@ class ProtobufjsRender {
         if (fileTsPre !== fileTsAfter) {
           const git = simpleGit('./typeLib')
           renderFileDType()
-          await git
-            .add('.')
-            .commit(`ChangeType: ${new Date().toISOString()}`)
-            .push(['origin', 'main'])
-            .catch((err) => console.log('autopush: ' + err))
+          await git.add('.').commit(`ChangeType: ${new Date().toISOString()}`).push(['origin', 'main'])
         }
       } catch (err) {
         console.log('error get content: ', err)
