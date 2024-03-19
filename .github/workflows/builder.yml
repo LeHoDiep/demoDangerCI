@@ -51,8 +51,7 @@ jobs:
           git config --global user.name "lehodiep.1999@gmail.com"
           git checkout main  # Chuyển sang nhánh main của submodule (hoặc nhánh mong muốn)
           git pull origin main  # Pull các thay đổi mới nhất từ remote vào submodule
-          cd ..  # Di chuyển ra khỏi thư mục của submodule
-          git add typeLib  # Thêm submodule vào index
+          git add .  # Thêm submodule vào index
           git commit -m "Update submodule"
           git push origin main  # Push các thay đổi vào nhánh main của submodule
       - name: Build
