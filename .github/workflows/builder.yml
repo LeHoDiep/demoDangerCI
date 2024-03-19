@@ -49,9 +49,7 @@ jobs:
           cd typeLib  # Di chuyển vào thư mục của submodule
           git config --global user.email "lehodiep.1999@gmail.com"
           git config --global user.name "lehodiep.1999@gmail.com"
-          git add reqResTypeRelease.d.ts reqResTypeRelease.js
-          git commit -m "Commit changes before updating submodule"
-          git checkout main  # Chuyển sang nhánh main của submodule (hoặc nhánh mong muốn)
+          # git checkout main  # Chuyển sang nhánh main của submodule (hoặc nhánh mong muốn)
           git add .  # Thêm submodule vào index
           git commit -m "Update submodule"
           git push origin main  # Push các thay đổi vào nhánh main của submodule
