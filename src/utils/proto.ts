@@ -148,18 +148,21 @@ class ProtobufjsRender {
       await (async () => {
         fs.writeFileSync(this.fileProtoName, this.protoContent)
       })()
-      try {
-        const fileTsPre = await readFileGetContent('./typeLib/reqResTypeRelease.d.ts')
 
-        await renderFileDType()
-        const fileTsAfter = await readFileGetContent('./typeLib/reqResTypeRelease.d.ts')
-        if (fileTsPre !== fileTsAfter) {
-          const git = simpleGit('./typeLib')
-          renderFileDType()
-          await git.add('.').commit(`ChangeType: ${new Date().toISOString()}`).push(['origin', 'main'])
+      const fileTsPre = await readFileGetContent('./typeLib/reqResTypeRelease.d.ts')
+
+      await renderFileDType()
+      const fileTsAfter = await readFileGetContent('./typeLib/reqResTypeRelease.d.ts')
+      if (fileTsPre !== fileTsAfter) {
+        const git = simpleGit('./typeLib')
+        renderFileDType()
+        try {
+          await git.add('.')
+          await git.commit(`ChangeType: ${new Date().toISOString()}`)
+          await git.push(['origin', 'main'])
+        } catch (err) {
+          console.error('Error during git operations:', err)
         }
-      } catch (err) {
-        console.log('error get content: ', err)
       }
     }
   }
