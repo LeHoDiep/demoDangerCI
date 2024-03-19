@@ -71,6 +71,6 @@ export interface RefreshTokenReqBody {
   refresh_token: string
 }
 
-export interface TestReqBody8888 {
+export interface TestReqBody7777 {
   test_string: string
 }
