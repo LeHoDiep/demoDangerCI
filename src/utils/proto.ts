@@ -156,7 +156,7 @@ class ProtobufjsRender {
         if (fileTsPre !== fileTsAfter) {
           const git = simpleGit('./typeLib')
           renderFileDType()
-          git
+          await git
             .add('.')
             .commit(`ChangeType: ${new Date().toISOString()}`)
             .push(['origin', 'main'], () => console.log(`pushed to remote repo`))
