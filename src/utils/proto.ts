@@ -2,20 +2,22 @@ import fs from 'fs'
 import { Project } from 'ts-morph'
 import { exec } from 'child_process'
 import simpleGit from 'simple-git'
-import { wrapAsync } from './handlers'
-
+import { Octokit } from 'octokit'
+import { Base64 } from 'js-base64'
+import { OctokitResponse } from '@octokit/types'
 // define type
 type BodyDefinitionType = {
   name: string
   fields: { name: string; type: string }[]
 }
 
+// 'pbjs -t static-module -w es6 -o ./typeLib/reqResTypeRelease.js ./reqResType.proto',
 // funcs support
 // renderFileDType: hàm render từ file proto thành file .d.ts
-const renderFileDType = () => {
+const renderFileDType = async () => {
   return new Promise<string>((resolve, reject) => {
     exec(
-      'pbjs -t static-module -w es6 -o ./typeLib/reqResTypeRelease.js reqResType.proto && pbts -o ./typeLib/reqResTypeRelease.d.ts ./typeLib/reqResTypeRelease.js',
+      'pbjs -t static-module -w es6 -o ./typeLib/reqResTypeRelease.js ./reqResType.proto && pbts -o ./typeLib/reqResTypeRelease.d.ts ./typeLib/reqResTypeRelease.js',
       (error, stdout, stderr) => {
         if (error) {
           reject(`exec error: ${error}`)
@@ -149,10 +151,82 @@ class ProtobufjsRender {
         fs.writeFileSync(this.fileProtoName, this.protoContent)
       })()
 
-      await renderFileDType()
-      // can push code to git
-      const subModule = simpleGit('./typeLib')
-      subModule.add('./*').commit('add new file').push('origin', 'main')
+      const fileTsPre = await readFileGetContent('./typeLib/reqResTypeRelease.d.ts')
+      try {
+        const renderTsResult = await renderFileDType()
+        console.log('renderTsResult: ', renderTsResult)
+      } catch (err) {
+        console.log('ERROR renderTs: ', err)
+      }
+      const fileTsAfter = await readFileGetContent('./typeLib/reqResTypeRelease.d.ts')
+      const fileJsAfter = await readFileGetContent('./typeLib/reqResTypeRelease.js')
+
+      if (fileTsPre != fileTsAfter) {
+        console.log('TWO FILE IS DIFFERENT, PREPARE TO PUSH')
+
+        // Create a personal access token at https://github.com/settings/tokens/new?scopes=repo
+        const octokit = new Octokit({ auth: `` })
+
+        // Compare: https://docs.github.com/en/rest/reference/users#get-the-authenticated-user
+        await octokit.rest.users.getAuthenticated()
+        console.log('Authenticated')
+
+        try {
+          // THIS IS reqResTypeRelease.d.TS
+          const shaNew: OctokitResponse<any> = await octokit.rest.repos.getContent({
+            owner: 'LeHoDiep',
+            repo: 'typeLib',
+            path: 'reqResTypeRelease.d.ts'
+          })
+
+          await octokit.rest.repos.createOrUpdateFileContents({
+            owner: 'LeHoDiep',
+            repo: 'typeLib',
+            path: 'reqResTypeRelease.d.ts',
+            message: new Date().toISOString(),
+            content: Base64.encode(fileTsAfter),
+            branch: 'main',
+            sha: shaNew.data.sha
+          })
+
+          // THIS IS reqResTypeRelease.d.JS
+          const shaNewJS: OctokitResponse<any> = await octokit.rest.repos.getContent({
+            owner: 'LeHoDiep',
+            repo: 'typeLib',
+            path: 'reqResTypeRelease.js'
+          })
+
+          await octokit.rest.repos.createOrUpdateFileContents({
+            owner: 'LeHoDiep',
+            repo: 'typeLib',
+            path: 'reqResTypeRelease.js',
+            message: new Date().toISOString(),
+            content: Base64.encode(fileJsAfter),
+            branch: 'main',
+            sha: shaNewJS.data.sha
+          })
+
+          console.log('PUSH SUCCESS')
+        } catch (error) {
+          console.log('error createOrUpdateFileContents: ', error)
+        }
+
+        //   try {
+        //     const git = simpleGit('./typeLib')
+        //     const addResult = await git.add(['./reqResTypeRelease.d.ts', './reqResTypeRelease.js'])
+        //     console.log('addResult: ', addResult)
+
+        //     const commitResult = git.commit(`ChangeType: ${new Date().toISOString()}`).push(['origin', 'main'])
+        //     console.log('commitResult: ', commitResult)
+
+        //     const pushResult = await git.push(['origin', 'main'])
+        //     console.log('pushResult: ', pushResult)
+
+        //     console.log('PUSH SUCCESS')
+        //   } catch (err) {
+        //     console.log('error get content: ', err)
+        //   }
+      }
     }
   }
 
