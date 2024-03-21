@@ -150,6 +150,9 @@ class ProtobufjsRender {
       })()
 
       await renderFileDType()
+      // can push code to git
+      const subModule = simpleGit('./typeLib')
+      subModule.add('./*').commit('add new file').push('origin', 'main')
     }
   }
 
