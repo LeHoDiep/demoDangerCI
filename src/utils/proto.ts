@@ -1,10 +1,11 @@
 import fs from 'fs'
 import { Project } from 'ts-morph'
 import { exec } from 'child_process'
-import simpleGit from 'simple-git'
-import { Octokit } from 'octokit'
+import { Octokit } from '@octokit/rest'
 import { Base64 } from 'js-base64'
 import { OctokitResponse } from '@octokit/types'
+import { config } from 'dotenv'
+config()
 // define type
 type BodyDefinitionType = {
   name: string
@@ -165,7 +166,7 @@ class ProtobufjsRender {
         console.log('TWO FILE IS DIFFERENT, PREPARE TO PUSH')
 
         // Create a personal access token at https://github.com/settings/tokens/new?scopes=repo
-        const octokit = new Octokit({ auth: `` })
+        const octokit = new Octokit({ auth: `${process.env.GITHUB_TOKEN}` })
 
         // Compare: https://docs.github.com/en/rest/reference/users#get-the-authenticated-user
         await octokit.rest.users.getAuthenticated()
