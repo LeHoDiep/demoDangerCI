@@ -44,7 +44,7 @@ jobs:
       - name: Run  renderDtype
         run: npm run renderDtype
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN}}
       # - name: Update submodule
       #   run: |
       #     git stash  # Stash any changes
