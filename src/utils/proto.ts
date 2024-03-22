@@ -164,7 +164,7 @@ class ProtobufjsRender {
 
       if (fileTsPre != fileTsAfter) {
         console.log('TWO FILE IS DIFFERENT, PREPARE TO PUSH')
-        console.log('TOKEN AUT: ', process.env.ENV_DANNGER)
+        console.log('TOKEN AUT: ', process.env.GITHUB_TOKEN)
         // Create a personal access token at https://github.com/settings/tokens/new?scopes=repo
         const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN })
 

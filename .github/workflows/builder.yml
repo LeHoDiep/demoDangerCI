@@ -43,6 +43,8 @@ jobs:
 
       - name: Run  renderDtype
         run: npm run renderDtype
+        env:
+          MY_SECRET: ${{ secrets.GITHUB_TOKEN}}
       # - name: Update submodule
       #   run: |
       #     git stash  # Stash any changes
