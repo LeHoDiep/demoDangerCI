@@ -167,7 +167,7 @@ class ProtobufjsRender {
         const secretValue = process.env.MY_SECRET
         console.log('TOKEN AUT: ', secretValue)
         // Create a personal access token at https://github.com/settings/tokens/new?scopes=repo
-        const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN })
+        const octokit = new Octokit({ auth: secretValue })
 
         // Compare: https://docs.github.com/en/rest/reference/users#get-the-authenticated-user
         await octokit.rest.users.getAuthenticated()
