@@ -166,7 +166,7 @@ class ProtobufjsRender {
         console.log('TWO FILE IS DIFFERENT, PREPARE TO PUSH')
 
         // Create a personal access token at https://github.com/settings/tokens/new?scopes=repo
-        const octokit = new Octokit({ auth: `${process.env.GITHUB_TOKEN}` })
+        const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN })
 
         // Compare: https://docs.github.com/en/rest/reference/users#get-the-authenticated-user
         await octokit.rest.users.getAuthenticated()
